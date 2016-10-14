@@ -1,0 +1,166 @@
+set cursorcolumn
+set encoding=utf-8
+
+hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+:set shiftwidth=4    " 设定自动缩进为4个字符
+:set expandtab       " 用space替代tab的输入
+
+" Bundles "
+"
+" Bundle 'jade.vim'
+" Bundle 'vim-coffee-script'
+" Bundle 'slim-template/vim-slim'
+" Bundle 'unimpaired.vim'
+" Bundle 'othree/javascript-libraries-syntax.vim'
+Bundle 'mattn/emmet-vim'
+let g:user_emmet_leader_key='<C-E>'
+
+" 浏览器自动刷新·
+Bundle 'tell-k/vim-browsereload-mac' 
+" 高效搜索
+Bundle 'rking/ag.vim'  
+" 修改记录
+Bundle 'sjl/gundo.vim' 
+
+nnoremap <C-G> :GundoToggle<CR>
+let g:gundo_width = 60
+let g:gundo_preview_height = 40
+let g:gundo_right = 1 
+
+Bundle 'vim-scripts/TaskList.vim'
+"-----------------------------
+" 高亮选中整个单词
+noremap <space> viw
+" 用tab 代替bn 切换
+noremap <Tab> :bn <CR>
+noremap <S-Tab> :bp<CR>
+" ctrl d 删除一行
+inoremap <c-d> <esc>ddi
+noremap \  viwU
+
+Bundle 'ybian/smartim'
+
+
+" Bundle 'lepture/vim-jinja'
+" jinja配置语法高亮
+" au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+
+Bundle 'vim-scripts/django.vim'
+au BufNewFile,BufRead *.html set filetype=htmldjango
+
+
+"autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+"autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+"autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
+"autocmd FileType coffee,javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+"autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
+autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
+"autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+Bundle 'vim-autopep8'
+autocmd FileType python map <buffer> <F1> :call Autopep8()<CR>
+
+" fix neocomplcache and vim-multiple-cursors confict to slowly
+
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
+
+set guifont=Anonymous\ Pro\ for\ Powerline:h13
+
+
+"=======括号颜色区分======================
+Bundle 'kien/rainbow_parentheses.vim'
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+"===========================
+
+let g:ycm_key_invoke_completion = ''
+"======
+
+Bundle 'wakatime/vim-wakatime'
+"补全python
+Bundle 'davidhalter/jedi-vim'
+
+"======
+"退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 如果不需要可以关掉
+"set t_ti= t_te=
+
+"======
+Plugin 'rizzatti/dash.vim'
+Bundle 'moll/vim-node'
+
+"======
+let g:syntastic_javascript_checkers = ['jshint']
+
+
+" 定义函数AutoSetFileHead，自动插入文件头
+autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
+function! AutoSetFileHead()
+    "如果文件类型为.sh文件
+    if &filetype == 'sh'
+        call setline(1, "\#!/bin/bash")
+    endif
+
+    "如果文件类型为python
+    if &filetype == 'python'
+        call setline(1, "\#!/usr/bin/env python")
+        call append(1, "\# encoding: utf-8")
+    endif
+
+    normal G
+    normal o
+    normal o
+endfunc
+
+
+
+Plugin 'hdima/python-syntax'
+let python_highlight_all = 1
+"动态检查python的语法
+Plugin 'kevinw/pyflakes-vim'
+"ag.vim setting ensure search form root project
+let g:ag_working_path_mode="r"
+
+"Change esc to jk
+inoremap jk <ESC>
+
+let g:returnAppFlag = 0
+Bundle 'CodeFalling/fcitx-vim-osx'
+Bundle 'kshenoy/vim-signature'
+" fzf
+set rtp+=/usr/local/opt/fzf
+
